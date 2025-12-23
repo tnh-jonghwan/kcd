@@ -521,29 +521,6 @@ model mtxcInfo {
   @@unique([ip, port], map: "unique_ip_port")
 }
 
-/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-model TMATERIALMASTER2 {
-  MATID        BigInt   @id @default(autoincrement())
-  ITEMCODE     String?  @db.VarChar(10)
-  APPDATE      String?  @db.VarChar(8)
-  ITEMTITLE    String?  @db.VarChar(255)
-  ITEMSPEC     String?  @db.VarChar(20)
-  UNIT         String?  @db.VarChar(20)
-  UNITPRICE    Decimal? @default(0.00) @db.Decimal(12, 2)
-  ITEMCATEGORY String?  @db.VarChar(10)
-  MANUFACT     String   @db.VarChar(50)
-  DEALER       String?  @db.VarChar(20)
-  MATERIAL     String?  @db.VarChar(100)
-  INS50        String?  @default("'N'") @db.VarChar(10)
-  INS80        String?  @default("'N'") @db.VarChar(10)
-  INS90        String?  @default("'N'") @db.VarChar(10)
-  DUP          String?  @default("'N'") @db.VarChar(10)
-  ADDITIONAL   String   @default("'0'") @db.VarChar(100)
-  INSTYPE      String   @default("'") @db.VarChar(20)
-
-  @@index([ITEMCODE], map: "ITEMCODE")
-}
-
 enum TKCD7_INCOMLETE {
   Y
   N

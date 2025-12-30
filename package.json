@@ -5,6 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "generate": "npx prisma generate",
+    "dbpull": "npx prisma db pull",
     "import": "ts-node import.ts",
     "build": "tsc"
   },

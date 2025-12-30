@@ -17,7 +17,7 @@
       // key 설정 (TKCD8 데이터 미리 로드, 매칭을 위함)
       const tkcd8Map = new Map();
       const allTkcd8 = await prisma.tKCD8.findMany();
-      allTkcd8.forEach(item => {
+      allTkcd8.forEach((item: any) => {
         const key = `${item.KCDCODE}---${item.KCDNAME_KR}---${item.KCDNAME_EN}`;
         if(!tkcd8Map.has(key)) {
           tkcd8Map.set(key, []);

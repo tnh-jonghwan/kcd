@@ -7,24 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model TKCD9 {
-  KCDID       BigInt  @id @default(autoincrement())
-  KCDCODE     String? @db.VarChar(10)
-  KCDNAME_KR  String? @db.Text
-  KCDNAME_EN  String? @db.Text
-  INFECT      String? @db.VarChar(10)
-  GENDER      String? @db.VarChar(2)
-  AGE1        Int?    @db.SmallInt
-  AGE2        Int?    @db.SmallInt
-  INCOMLETE   Int?    @default(0) @db.TinyInt
-  MT028       Float?  @default(0)
-  DTYPE       String? @db.VarChar(20)
-  MAINDISEASE String? @default("'") @db.VarChar(2)
-  CHUNACHECK  Int?    @default(0) @db.TinyInt
-
-  @@map("TKCD9")
-}
-
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model TACUPOINT {
   ACPID   Int     @id @default(autoincrement())
@@ -81,11 +63,11 @@ model TCHUNADISEASE {
 model TCOMPANY {
   COMPANYID Int     @id @default(autoincrement())
   GROUPCODE Int?    @default(0)
-  GROUPNAME String? @default("'") @db.VarChar(50)
-  COMCODE   String? @default("'0'") @db.VarChar(8)
-  COMNAME   String? @default("'") @db.VarChar(50)
+  GROUPNAME String? @default("") @db.VarChar(50)
+  COMCODE   String? @default("0") @db.VarChar(8)
+  COMNAME   String? @default("") @db.VarChar(50)
   NOTE      String? @db.VarChar(500)
-  CRTIME    String? @default("'") @db.VarChar(14)
+  CRTIME    String? @default("") @db.VarChar(14)
 }
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
@@ -96,20 +78,20 @@ model TDRUGMASTER {
   APPDATE      String?  @db.VarChar(8)
   ITEMTYPE     String?  @db.VarChar(20)
   ITEMTITLE    String?  @db.Text
-  UNIT         String?  @default("'") @db.VarChar(8)
-  EXCODE       String?  @default("'") @db.VarChar(4)
-  MANUFAC      String   @default("'") @db.VarChar(40)
-  MAINCOM      String   @default("'") @db.VarChar(10)
-  DOSAGE       String   @default("'") @db.VarChar(40)
+  UNIT         String?  @default("") @db.VarChar(8)
+  EXCODE       String?  @default("") @db.VarChar(4)
+  MANUFAC      String   @default("") @db.VarChar(40)
+  MAINCOM      String   @default("") @db.VarChar(10)
+  DOSAGE       String   @default("") @db.VarChar(40)
   DOSE         Decimal? @db.Decimal(10, 4)
   ITEMCATEGORY String?  @db.VarChar(11)
   ITEMTITLEEN  String?  @db.VarChar(200)
   PRESCOND     String?  @db.VarChar(100)
   USAGE        Int?     @db.SmallInt
   PROMOTE      BigInt?
-  ATCCODE      String?  @default("'") @db.VarChar(10)
-  ATCNAME      String?  @default("'") @db.VarChar(200)
-  NARC         String   @default("'") @db.VarChar(16)
+  ATCCODE      String?  @default("") @db.VarChar(10)
+  ATCNAME      String?  @default("") @db.VarChar(200)
+  NARC         String   @default("") @db.VarChar(16)
 
   @@index([ITEMCODE], map: "ITEMCODE")
 }
@@ -124,10 +106,10 @@ model TDRUGPRICE {
   PRESCOND  String?  @db.VarChar(100)
   USAGE     Int?     @db.SmallInt
   PROMOTE   BigInt?
-  NARC      String   @default("'") @db.VarChar(16)
-  INS30     String?  @default("'N'") @db.Char(1)
-  INS50     String?  @default("'N'") @db.Char(1)
-  INS80     String?  @default("'N'") @db.Char(1)
+  NARC      String   @default("") @db.VarChar(16)
+  INS30     String?  @default("N") @db.Char(1)
+  INS50     String?  @default("N") @db.Char(1)
+  INS80     String?  @default("N") @db.Char(1)
 
   @@index([APPDATE], map: "APPDATE")
   @@index([ITEMCODE], map: "ITEMCODE")
@@ -142,8 +124,8 @@ model TEXCELFORM {
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model TEXCELTEMPLATE {
   TID       Int    @id @default(autoincrement())
-  TCODE     String @default("'0'") @db.VarChar(10)
-  SPTITLE   String @default("'") @db.VarChar(64)
+  TCODE     String @default("0") @db.VarChar(10)
+  SPTITLE   String @default("") @db.VarChar(64)
   EXCELFORM Bytes? @db.Blob
 }
 
@@ -179,8 +161,8 @@ model TINSMASTER {
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model TINSMATERIAL {
   MATID     Int     @id @default(autoincrement())
-  MATERIAL  String? @default("'") @db.VarChar(20)
-  VENDER    String? @default("'") @db.VarChar(40)
+  MATERIAL  String? @default("") @db.VarChar(20)
+  VENDER    String? @default("") @db.VarChar(40)
   UNIT      Float?  @db.Float
   UNITPRICE Float?  @db.Float
   DATEST    String? @db.VarChar(8)
@@ -193,7 +175,7 @@ model TINSMATERIAL {
 model TINSPRICE {
   PRICEID   BigInt   @id @default(autoincrement())
   ITEMCODE  String?  @db.VarChar(10)
-  APPDATE   String?  @default("'") @db.VarChar(8)
+  APPDATE   String?  @default("") @db.VarChar(8)
   UNITPRICE Decimal? @default(0.00) @db.Decimal(12, 2)
   HOSPRICE  Decimal? @default(0.00) @db.Decimal(12, 2)
   DENPRICE  Decimal? @default(0.00) @db.Decimal(12, 2)
@@ -203,12 +185,12 @@ model TINSPRICE {
   CAREPRICE Decimal? @default(0.00) @db.Decimal(12, 2)
   OMPRICE   Decimal? @default(0.00) @db.Decimal(12, 2)
   POINT     Decimal? @default(0.0000) @db.Decimal(10, 4)
-  INS50     String?  @default("'N'") @db.Char(1)
-  INS80     String?  @default("'N'") @db.Char(1)
-  INS90     String?  @default("'N'") @db.Char(1)
-  INS100    String?  @default("'N'") @db.Char(1)
-  DUP       String?  @default("'N'") @db.Char(1)
-  INSTYPE   String?  @default("'") @db.VarChar(20)
+  INS50     String?  @default("N") @db.Char(1)
+  INS80     String?  @default("N") @db.Char(1)
+  INS90     String?  @default("N") @db.Char(1)
+  INS100    String?  @default("N") @db.Char(1)
+  DUP       String?  @default("N") @db.Char(1)
+  INSTYPE   String?  @default("") @db.VarChar(20)
   ADDOP     Int?     @default(0) @db.TinyInt
 
   @@index([APPDATE], map: "INXAPPDATE")
@@ -218,10 +200,10 @@ model TINSPRICE {
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model TITEMCATEGORY {
   CATEGORYID    Int     @id @default(autoincrement())
-  MAJORCATEGORY String? @default("'") @db.VarChar(20)
-  SUBCATEGORY   String? @default("'") @db.VarChar(20)
-  MINORCATEGORY String? @default("'") @db.VarChar(20)
-  CATNO         String? @default("'") @db.VarChar(8)
+  MAJORCATEGORY String? @default("") @db.VarChar(20)
+  SUBCATEGORY   String? @default("") @db.VarChar(20)
+  MINORCATEGORY String? @default("") @db.VarChar(20)
+  CATNO         String? @default("") @db.VarChar(8)
   PACAT         Int?    @db.TinyInt
   ACTING        Int?    @db.TinyInt
 
@@ -258,7 +240,7 @@ model TKCD8 {
   INCOMLETE   Int?    @default(0) @db.TinyInt
   MT028       Float?  @default(0)
   DTYPE       String? @db.VarChar(20)
-  MAINDISEASE String? @default("'") @db.VarChar(2)
+  MAINDISEASE String? @default("") @db.VarChar(2)
   CHUNACHECK  Int?    @default(0) @db.TinyInt
 
   @@map("TKCD8")
@@ -276,22 +258,22 @@ model TKCDGROUP {
 model TKMINSMEDICINE {
   MEDID     Int     @id @default(autoincrement())
   ITEMCODE  String  @db.Char(12)
-  ITEMNAME  String? @default("'") @db.VarChar(100)
-  MANUFACT  String? @default("'") @db.VarChar(100)
+  ITEMNAME  String? @default("") @db.VarChar(100)
+  MANUFACT  String? @default("") @db.VarChar(100)
   UNITPRICE Float?  @default(0) @db.Float
   UNITWT    Float?  @default(0) @db.Float
   WEIGHT    Float?  @default(0) @db.Float
   TOTALWT   Float?  @default(0) @db.Float
-  APPDATE   String? @default("'") @db.VarChar(8)
-  EXPDATE   String? @default("'") @db.VarChar(8)
-  UNIT      String? @default("'g'") @db.VarChar(4)
+  APPDATE   String? @default("") @db.VarChar(8)
+  EXPDATE   String? @default("") @db.VarChar(8)
+  UNIT      String? @default("g") @db.VarChar(4)
   OLDCODE   String? @db.VarChar(8)
 }
 
 model TKMINSMEDICINECOMPONENT {
   COMPONENTID Int     @id @default(autoincrement())
-  COMPONENT   String? @default("'") @db.VarChar(20)
-  MANUFACT    String? @default("'") @db.VarChar(40)
+  COMPONENT   String? @default("") @db.VarChar(20)
+  MANUFACT    String? @default("") @db.VarChar(40)
   UNITG       Float?  @db.Float
   RAWWT       Float?  @db.Float
   UNITPRICE   Float?  @db.Float
@@ -300,7 +282,7 @@ model TKMINSMEDICINECOMPONENT {
   INSCODE     String? @db.VarChar(12)
   TOTALWT     Float?  @default(0) @db.Float
   OLDCODE     String? @db.VarChar(9)
-  UNIT        String? @default("'g'") @db.VarChar(2)
+  UNIT        String? @default("g") @db.VarChar(2)
   COMPNAME    String? @db.VarChar(8)
 }
 
@@ -315,7 +297,7 @@ model TKMINSPRESC {
 
 model TLOCALGOV {
   GOVCODE  String @id @db.VarChar(12)
-  LOCALGOV String @default("'") @db.VarChar(100)
+  LOCALGOV String @default("") @db.VarChar(100)
 }
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
@@ -330,10 +312,10 @@ model TMATERIALMASTER {
   UNITPRICE    Decimal? @default(0.00) @db.Decimal(12, 2)
   ITEMCATEGORY String?  @db.VarChar(10)
   MATERIAL     String?  @db.VarChar(100)
-  DUP          String?  @default("'N'") @db.VarChar(10)
+  DUP          String?  @default("N") @db.VarChar(10)
   DEALER       String?  @db.VarChar(20)
-  ADDITIONAL   String   @default("'0'") @db.VarChar(100)
-  INSTYPE      String   @default("'") @db.VarChar(20)
+  ADDITIONAL   String   @default("0") @db.VarChar(100)
+  INSTYPE      String   @default("") @db.VarChar(20)
 
   @@index([ITEMCODE], map: "ITEMCODE")
 }
@@ -341,15 +323,15 @@ model TMATERIALMASTER {
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model TMEDICOMMASTER {
   MEDICOMID Int    @id @default(autoincrement())
-  MATERIAL  String @default("'") @db.VarChar(20)
-  COMPANY   String @default("'") @db.VarChar(40)
-  PNAME     String @default("'") @db.VarChar(40)
-  MCODE     String @default("'") @db.VarChar(10)
-  RCODE     String @default("'") @db.VarChar(15)
-  SCODE     String @default("'") @db.VarChar(15)
-  PCODE     String @default("'") @db.VarChar(10)
-  APPDATE   String @default("'") @db.VarChar(10)
-  ENDDATE   String @default("'") @db.VarChar(10)
+  MATERIAL  String @default("") @db.VarChar(20)
+  COMPANY   String @default("") @db.VarChar(40)
+  PNAME     String @default("") @db.VarChar(40)
+  MCODE     String @default("") @db.VarChar(10)
+  RCODE     String @default("") @db.VarChar(15)
+  SCODE     String @default("") @db.VarChar(15)
+  PCODE     String @default("") @db.VarChar(10)
+  APPDATE   String @default("") @db.VarChar(10)
+  ENDDATE   String @default("") @db.VarChar(10)
 
   @@index([APPDATE], map: "APPDATE")
   @@index([COMPANY], map: "COMPNAME")
@@ -364,13 +346,13 @@ model TMEDICOMPURCHASE {
   PURCHASEID Int    @id @default(autoincrement())
   MCODE      String @db.VarChar(10)
   HERBCODE   String @db.VarChar(10)
-  HERBNAME   String @default("'") @db.VarChar(50)
-  ASNAME     String @default("'") @db.VarChar(50)
-  COMPANY    String @default("'") @db.VarChar(50)
+  HERBNAME   String @default("") @db.VarChar(50)
+  ASNAME     String @default("") @db.VarChar(50)
+  COMPANY    String @default("") @db.VarChar(50)
   DATE       String @db.Char(8)
   QTY        Int    @default(0)
   PRICE      Int    @default(0)
-  ORIGIN     String @default("'") @db.VarChar(50)
+  ORIGIN     String @default("") @db.VarChar(50)
   DTYPE      String @db.Char(1)
 
   @@index([DTYPE, HERBCODE, DATE], map: "IDX_TMEDICOMPURCHASE_DTYPE_HERBCODE_DATE")
@@ -393,23 +375,23 @@ model TNIMSDRUGMASTER {
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model TNONCOVEREDITEM {
   ITEMID   Int     @id @default(autoincrement())
-  ITEMNO   String? @default("'") @db.VarChar(4)
-  ITEMTYPE String? @default("'") @db.VarChar(20)
-  YEARYN   String? @default("'") @db.VarChar(2)
+  ITEMNO   String? @default("") @db.VarChar(4)
+  ITEMTYPE String? @default("") @db.VarChar(20)
+  YEARYN   String? @default("") @db.VarChar(2)
   AREACODE Int?    @default(0) @db.TinyInt
-  OCCRTYPE String? @default("'") @db.VarChar(10)
-  CODETYPE String? @default("'") @db.VarChar(2)
-  OPTYPE   String? @default("'") @db.VarChar(8)
-  REPTAREA String? @default("'") @db.VarChar(10)
-  ITEMCODE String? @default("'") @db.VarChar(10)
-  CAT1     String? @default("'") @db.VarChar(80)
-  CAT2     String? @default("'") @db.VarChar(80)
-  CAT3     String? @default("'") @db.VarChar(80)
-  ITEMNAME String? @default("'") @db.VarChar(100)
-  ITEMMEMO String? @default("'") @db.VarChar(100)
-  USED     String? @default("'") @db.VarChar(3)
-  APPDATE  String? @default("'") @db.VarChar(8)
-  ENDDATE  String? @default("'") @db.VarChar(8)
+  OCCRTYPE String? @default("") @db.VarChar(10)
+  CODETYPE String? @default("") @db.VarChar(2)
+  OPTYPE   String? @default("") @db.VarChar(8)
+  REPTAREA String? @default("") @db.VarChar(10)
+  ITEMCODE String? @default("") @db.VarChar(10)
+  CAT1     String? @default("") @db.VarChar(80)
+  CAT2     String? @default("") @db.VarChar(80)
+  CAT3     String? @default("") @db.VarChar(80)
+  ITEMNAME String? @default("") @db.VarChar(100)
+  ITEMMEMO String? @default("") @db.VarChar(100)
+  USED     String? @default("") @db.VarChar(3)
+  APPDATE  String? @default("") @db.VarChar(8)
+  ENDDATE  String? @default("") @db.VarChar(8)
 
   @@index([APPDATE], map: "APPDATE")
   @@index([ENDDATE], map: "ENDDATE")
@@ -421,8 +403,8 @@ model TPOPUPWINDOW {
   PWID      Int     @id @default(autoincrement())
   WIDTH     Int     @default(0)
   HEIGHT    Int     @default(0)
-  TITLE     String? @default("'") @db.VarChar(128)
-  DOCUMENT  String? @default("'") @db.VarChar(256)
+  TITLE     String? @default("") @db.VarChar(128)
+  DOCUMENT  String? @default("") @db.VarChar(256)
   DUPLICATE Int?    @default(0) @db.SmallInt
   DISCD     Int?    @db.UnsignedTinyInt
 }
@@ -430,12 +412,12 @@ model TPOPUPWINDOW {
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model TPRESCCOMPONENTMASTER {
   PRESCCOMID Int    @id @default(autoincrement())
-  PRESCCODE  String @default("'") @db.VarChar(10)
-  MCODE      String @default("'") @db.VarChar(10)
-  MATERIAL   String @default("'") @db.VarChar(40)
+  PRESCCODE  String @default("") @db.VarChar(10)
+  MCODE      String @default("") @db.VarChar(10)
+  MATERIAL   String @default("") @db.VarChar(40)
   UNITG      Float  @default(0) @db.Float
-  APPDATE    String @default("'") @db.VarChar(10)
-  ENDDATE    String @default("'") @db.VarChar(10)
+  APPDATE    String @default("") @db.VarChar(10)
+  ENDDATE    String @default("") @db.VarChar(10)
 
   @@index([APPDATE], map: "APPDATE")
   @@index([ENDDATE], map: "ENDDATE")
@@ -448,14 +430,14 @@ model TPRESCRIPTIONMASTER {
   PRESCID     Int    @id @default(autoincrement())
   PRESCTYPE   Int    @default(0) @db.TinyInt
   DTYPE       Int    @default(0) @db.TinyInt
-  DISEASENAME String @default("'") @db.VarChar(50)
-  PRESCCODE   String @default("'") @db.VarChar(10)
-  PRESCNAME   String @default("'") @db.VarChar(50)
+  DISEASENAME String @default("") @db.VarChar(50)
+  PRESCCODE   String @default("") @db.VarChar(10)
+  PRESCNAME   String @default("") @db.VarChar(50)
   UNITPRICE   Int    @default(0)
   PRICE       Int    @default(0)
-  APPDATE     String @default("'") @db.VarChar(8)
-  ENDDATE     String @default("'") @db.VarChar(8)
-  INSTYPE     String @default("'") @db.VarChar(10)
+  APPDATE     String @default("") @db.VarChar(8)
+  ENDDATE     String @default("") @db.VarChar(8)
+  INSTYPE     String @default("") @db.VarChar(10)
 
   @@index([APPDATE], map: "APPDATE")
   @@index([DISEASENAME], map: "DISNAME")
@@ -477,18 +459,18 @@ model TRAREDISEASE {
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model TSAMPLECODE {
-  SPECIMENCODE String? @default("'") @db.Char(4)
-  SPECIMENNAME String? @default("'") @db.VarChar(50)
-  CONSIGNCOMID String? @default("'") @db.VarChar(10)
+  SPECIMENCODE String? @default("") @db.Char(4)
+  SPECIMENNAME String? @default("") @db.VarChar(50)
+  CONSIGNCOMID String? @default("") @db.VarChar(10)
 
   @@ignore
 }
 
 model TSPCODE {
   CID         Int    @id @default(autoincrement())
-  SPCODE      String @default("'0'") @db.VarChar(10)
-  SPTITLE     String @default("'") @db.VarChar(64)
-  SPFORMAT    String @default("'") @db.VarChar(100)
+  SPCODE      String @default("0") @db.VarChar(10)
+  SPTITLE     String @default("") @db.VarChar(64)
+  SPFORMAT    String @default("") @db.VarChar(100)
   DESCRIPTION String @db.Text
   INSTYPE     Int?   @default(1) @db.TinyInt
   SPTYPE      Int?   @default(1) @db.TinyInt
@@ -513,35 +495,29 @@ model TVCODE {
 
 model mtxcInfo {
   id          Int    @id @default(autoincrement())
-  ip          String @default("'") @db.VarChar(50)
-  port        String @default("'") @db.VarChar(20)
-  description String @default("'") @db.VarChar(20)
-  updatedAt   String @default("'") @db.VarChar(30)
+  ip          String @default("") @db.VarChar(50)
+  port        String @default("") @db.VarChar(20)
+  description String @default("") @db.VarChar(20)
+  updatedAt   String @default("") @db.VarChar(30)
 
   @@unique([ip, port], map: "unique_ip_port")
 }
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-model TMATERIALMASTER2 {
-  MATID        BigInt   @id @default(autoincrement())
-  ITEMCODE     String?  @db.VarChar(10)
-  APPDATE      String?  @db.VarChar(8)
-  ITEMTITLE    String?  @db.VarChar(255)
-  ITEMSPEC     String?  @db.VarChar(20)
-  UNIT         String?  @db.VarChar(20)
-  UNITPRICE    Decimal? @default(0.00) @db.Decimal(12, 2)
-  ITEMCATEGORY String?  @db.VarChar(10)
-  MANUFACT     String   @db.VarChar(50)
-  DEALER       String?  @db.VarChar(20)
-  MATERIAL     String?  @db.VarChar(100)
-  INS50        String?  @default("'N'") @db.VarChar(10)
-  INS80        String?  @default("'N'") @db.VarChar(10)
-  INS90        String?  @default("'N'") @db.VarChar(10)
-  DUP          String?  @default("'N'") @db.VarChar(10)
-  ADDITIONAL   String   @default("'0'") @db.VarChar(100)
-  INSTYPE      String   @default("'") @db.VarChar(20)
-
-  @@index([ITEMCODE], map: "ITEMCODE")
+model TKCD9 {
+  KCDID       BigInt  @id @default(autoincrement())
+  KCDCODE     String? @db.VarChar(10)
+  KCDNAME_KR  String? @db.Text
+  KCDNAME_EN  String? @db.Text
+  INFECT      String? @db.VarChar(10)
+  GENDER      String? @db.VarChar(2)
+  AGE1        Int?    @db.SmallInt
+  AGE2        Int?    @db.SmallInt
+  INCOMLETE   Int?    @default(0) @db.TinyInt
+  MT028       Float?  @default(0)
+  DTYPE       String? @db.VarChar(20)
+  MAINDISEASE String? @default("") @db.VarChar(2)
+  CHUNACHECK  Int?    @default(0) @db.TinyInt
 }
 
 enum TKCD7_INCOMLETE {
